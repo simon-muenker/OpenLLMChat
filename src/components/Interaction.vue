@@ -18,7 +18,7 @@
           <Button @click="handleReset">
             <div class="flex">
               <ArrowPathIcon class="h-5 w-5"/>
-              <span class="text-sm ml-2">Reset</span>
+              <span class="text-sm ml-2">reset</span>
             </div>
           </Button>
           <Caption>Generated content may be inaccurate or false.</Caption>

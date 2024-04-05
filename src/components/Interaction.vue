@@ -47,7 +47,7 @@
           <Button>
             <div class="flex">
               <ArrowTopRightOnSquareIcon class="h-5 w-5"/>
-              <span class="text-sm ml-2">send feedback</span>
+              <span class="text-sm ml-2">feedback</span>
             </div>
           </Button>
 

@@ -1,94 +1,85 @@
 <template>
-  <div class="my-4">
+
+  <Topbar @on-menu-toggle="isSidebarOpen = !isSidebarOpen"/>
+
+  <div
+      class="py-24 fixed top-0 -left-full w-full h-full bg-white z-10 opacity-50 transition-all"
+      :class="[{ '!left-0 !opacity-100': isSidebarOpen }]"
+  >
     <Container>
-
-      <h1 class="text-slate-700 mb-3">
-        <span class="font-bold text-4xl sm:text-5xl">{{ getConfigStore().getAgent.name }}</span>
-        <span class="text-sm sm:text-base">
-          Chat with the friendly <span class="font-bold text-sky-800">A</span>ndro<span
-            class="font-bold text-sky-800">I</span>d
-        </span>
-      </h1>
-
-      <Chat :messages="getChatStore().getItems"/>
-
-      <span v-if="loading" class="text-6xl font-bold text-slate-500 text-center animate-pulse">...</span>
-
-      <div class="mt-4 flex flex-row gap-3 items-center">
-        <Textarea
-            :value="message"
-            placeholder="Chat with Bishop"
-            @input="event => {message = event.target.value}"
-        />
-        <Button class="bg-emerald-400" :disabled="isSubmitDisabled" @click="submit">
-          <PaperAirplaneIcon class="h-8 w-8"/>
-        </Button>
-      </div>
-
-      <div class="my-4 flex flex-row gap-3 justify-between align-items">
-        <Button @click="reset">
-          <div class="flex">
-            <ArrowPathIcon class="h-5 w-5"/>
-            <span class="text-sm ml-2">Reset</span>
-          </div>
-        </Button>
-        <span class="text-sm text-slate-500">Generated content may be inaccurate or false.</span>
-      </div>
-
-      <span class="text-sm text-slate-500">model selection</span>
+      <SubHeadline>model selection</SubHeadline>
       <ModelSelection
           :active="getConfigStore().getAgent.model.active"
           :options="getConfigStore().getAgent.model.selection"
           @onSelect="model => {getConfigStore().setActiveAgentModel(model)}"
       />
 
-      <span class="text-sm text-slate-500">persona customization</span>
-        <Textarea
-            class="text-sm text-slate-400"
-            :value="getConfigStore().getAgent.persona"
-            @input="(event) => getConfigStore().setAgentPersona(event.target.value)"
-        />
+      <div class="h-1 bg-slate-700 my-8"></div>
+
+      <SubHeadline>persona customization</SubHeadline>
+      <Textarea
+          :value="getConfigStore().getAgent.persona"
+          class="text-sm text-slate-400"
+          @input="(event) => getConfigStore().setAgentPersona(event.target.value)"
+      />
 
       <Footer/>
+    </Container>
+  </div>
 
+  <div class="pt-24 pb-72 min-h-svh">
+    <Container>
+
+      <History :is-loading="isLoading" :messages="getChatStore().getItems"/>
 
     </Container>
   </div>
+
+  <Interaction
+      :active-model="'mistral'"
+      :active-persona="'bishop'"
+      :handle-reset="reset"
+      :handle-submit="submit"
+      :is-submit-disabled="isSubmitDisabled"
+      @on-message-change="(newMessage) => this.message = newMessage"
+  />
+
 </template>
 
 <script>
-import Container from "@/components/Container.vue"
-import Textarea from "@/components/Textarea.vue"
-import Button from "@/components/Button.vue"
-import Chat from "@/components/Chat.vue"
+import Container from "@/components/atoms/Container.vue"
+import Textarea from "@/components/atoms/Textarea.vue"
+import History from "@/components/History.vue"
 import Footer from "@/components/Footer.vue"
 
-import {ArrowPathIcon, PaperAirplaneIcon} from "@heroicons/vue/24/outline"
 import {inference} from "@/inference"
 import {fillPrompt, formatChat} from "@/prompt"
 
 import {getChatStore} from "@/stores/chat"
 import {getConfigStore} from "@/stores/config"
 import ModelSelection from "@/components/ModelSelection.vue"
-
+import Topbar from "@/components/Topbar.vue"
+import Interaction from "@/components/Interaction.vue"
+import SubHeadline from "@/components/atoms/typography/SubHeadline.vue";
 
 export default {
   name: 'App',
   components: {
-    Chat,
+    SubHeadline,
+    Interaction,
+    Topbar,
+    History,
     Container,
     Textarea,
-    Button,
-    PaperAirplaneIcon,
-    ArrowPathIcon,
     ModelSelection,
-    Footer
+    Footer,
 
   },
   data() {
     return {
       message: '',
-      loading: true,
+      isLoading: true,
+      isSidebarOpen: false
     }
   },
   computed: {
@@ -101,19 +92,18 @@ export default {
   },
   methods: {
     getConfigStore,
+    getChatStore,
     submit() {
-      if (this.isSubmitDisabled) return
-
       getChatStore().addUserMessage(this.message)
       this.getResponse(getChatStore().getItems)
       this.message = ''
     },
     getResponse(chat) {
-      this.loading = true
+      this.isLoading = true
 
       inference(getConfigStore().getAgent.model.active, fillPrompt(getConfigStore().getAgent.persona, formatChat(chat)))
           .then(res => getChatStore().addAgentMessage(res.response))
-          .then(() => this.loading = false)
+          .then(() => this.isLoading = false)
     },
     reset() {
       getChatStore().reset()
@@ -123,7 +113,7 @@ export default {
         text: 'Introduce yourself.'
       }])
     },
-    getChatStore
   }
 }
 </script>
+<style src="@vueform/slider/themes/default.css"></style>

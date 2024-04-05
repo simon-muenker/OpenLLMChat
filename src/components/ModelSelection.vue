@@ -1,13 +1,17 @@
 <template>
   <div class="grid grid-cols-2 gap-4">
     <template v-for="item in options">
-      <input :id=item v-model="picked" :value=item class="hidden" type=radio @change="onSelect">
+      <input :id=item.id v-model="picked" :value=item.id class="hidden" type=radio @change="onSelect">
       <label
-          :class="[item === this.active ? 'bg-emerald-100' : '']"
-          :for=item
-          class="cursor-pointer text-sm text-slate-700 dark:text-slate-300 px-4 py-2 rounded-lg hover:bg-gray-100 transition-all"
+          :class="[item.id === this.active ? '!border-emerald-600 !bg-emerald-50' : '']"
+          :for=item.id
+          class="cursor-pointer text-sm text-slate-700 p-2 border-l-4 border-slate-600 hover:border-amber-600 hover:bg-amber-50 transition-colors"
       >
-        {{ item }}
+        <span class="font-bold">{{ item.name }}</span>&nbsp;
+        <span>({{ item.type }}, {{ item.params }})</span><br>
+        <span>{{ item.author }}</span>&nbsp;
+        <span>({{ item.origin }})</span>&nbsp;
+        <a class="underline underline-offset-2" :href=item.moreLink target="_blank">more</a>
       </label>
     </template>
   </div>

@@ -8,7 +8,9 @@
   },
   "dependencies": {
     "@heroicons/vue": "^2.1.3",
+    "@vueform/slider": "^2.1.10",
     "lodash": "^4.17.21",
+    "marked": "^12.0.1",
     "pinia": "^2.1.7",
     "vue": "^3.4.21"
   },

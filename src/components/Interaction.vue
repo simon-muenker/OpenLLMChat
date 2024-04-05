@@ -1,6 +1,6 @@
 <template>
   <div class="fixed bottom-0 w-full">
-    <Container class="px-0">
+    <Container class="!px-0 sm:px-3">
       <div class="bg-white p-3 border-slate-800 border-t-4 border-l-0 border-r-0 sm:border-l-4 sm:border-r-4">
 
         <div class="flex flex-row gap-3 items-center">

@@ -3,7 +3,7 @@
   <Topbar @on-menu-toggle="isSidebarOpen = !isSidebarOpen"/>
 
   <div
-      class="py-24 fixed top-0 -left-full w-full h-full bg-white z-10 opacity-50 transition-all"
+      class="py-24 absolute top-0 overscroll-y-auto -left-full w-full h-auto min-h-full bg-white z-10 opacity-50 transition-all"
       :class="[{ '!left-0 !opacity-100': isSidebarOpen }]"
   >
     <Container>

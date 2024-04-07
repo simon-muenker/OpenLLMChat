@@ -2,12 +2,13 @@
   <div class="bg-slate-100">
 
     <Container class="pt-12 min-h-svh">
-      <Headline>OpenLLMChat</Headline>
 
+      <Headline>OpenLLMChat</Headline>
       <span class="h-16"></span>
 
-      <ChatHistory :is-loading="isLoading" :messages="getChatStore().getItems"/>
+      <ChatHistory/>
 
+      <span v-if="isLoading" class="text-6xl font-bold text-slate-500 text-center animate-pulse">...</span>
       <span class="h-8"></span>
 
       <ChatInteraction
@@ -18,6 +19,7 @@
       />
 
       <AppFooter/>
+
     </Container>
 
     <div class="fixed z-40 bottom-4 w-full">
@@ -27,24 +29,23 @@
     </div>
 
     <MenuContainer :is-open="isSidebarOpen">
-      <Container class="pt-12 min-h-svh">
-        <Headline>configure</Headline>
+      <Container class="pt-12 pb-32 min-h-svh">
 
+        <Headline>configure</Headline>
         <span class="h-16"></span>
 
-        <SubHeadline>model selection</SubHeadline>
-        <ConfigureModel
-            :active="getConfigStore().getAgent.model.active"
-            :options="getConfigStore().getAgent.model.selection"
-            @onSelect="model => {getConfigStore().setActiveAgentModel(model)}"
-        />
-
+        <SubHeadline>select a model</SubHeadline>
+        <ConfigureModel />
         <div class="my-8"></div>
 
-        <SubHeadline>persona customization</SubHeadline>
+        <SubHeadline>select a persona</SubHeadline>
+        todo
+        <div class="my-8"></div>
+
+        <SubHeadline>write a persona</SubHeadline>
         <Textarea
             :value="getConfigStore().getAgent.persona"
-            class="text-sm text-slate-400"
+            class="text-sm italic rounded-xl shadow-xl !bg-white !p-4"
             @input="(event) => getConfigStore().setAgentPersona(event.target.value)"
         />
 
@@ -99,7 +100,7 @@ export default {
     }
   },
   mounted() {
-    this.reset()
+    //this.reset()
   },
   methods: {
     getConfigStore,

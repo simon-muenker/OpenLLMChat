@@ -3,7 +3,13 @@ import {getConfigStore} from "@/stores/config"
 
 export const getChatStore = defineStore('chat', {
     state: () => ({
-        items: []
+        items: [
+            {
+                'name': 'Model',
+                'icon': '🖲',
+                'text': 'Hello my name is Bishop, I am here to assist you!'
+            }
+        ]
     }),
     getters: {
         getItems: (state) => state.items,

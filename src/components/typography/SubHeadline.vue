@@ -1,5 +1,5 @@
 <template>
-  <span class="text-lg text-slate-600">
+  <span class="text-2xl sm:text-3xl text-slate-400">
     <slot></slot>
   </span>
 </template>

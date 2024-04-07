@@ -1,11 +1,11 @@
 <template>
-  <div class="grid grid-cols-2 gap-4">
+  <div class="grid grid-cols-2 gap-8">
     <template v-for="item in options">
       <input :id=item.id v-model="picked" :value=item.id class="hidden" type=radio @change="onSelect">
       <label
-          :class="[item.id === this.active ? '!border-emerald-600 !bg-emerald-50' : '']"
+          :class="[item.id === this.active ? '!bg-emerald-100' : '']"
           :for=item.id
-          class="cursor-pointer text-sm text-slate-700 p-2 border-l-4 border-slate-600 hover:border-amber-600 hover:bg-amber-50 transition-colors"
+          class="cursor-pointer text-sm rounded-xl bg-white shadow-xl p-3 transition-colors"
       >
         <span class="font-bold">{{ item.name }}</span>&nbsp;
         <span>({{ item.type }}, {{ item.params }})</span><br>

@@ -1,10 +1,10 @@
 <template>
-  <span class="text-xs text-slate-500">
+  <span class="font-bold text-slate-600">
     <slot></slot>
   </span>
 </template>
 <script>
 export default {
-  name: "Caption"
+  name: "TextBold"
 }
 </script>

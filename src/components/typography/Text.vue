@@ -1,10 +1,10 @@
 <template>
-  <span class="text-xs text-slate-500">
+  <span class="text-slate-600 leading-relaxed">
     <slot></slot>
   </span>
 </template>
 <script>
 export default {
-  name: "Caption"
+  name: "Text"
 }
 </script>

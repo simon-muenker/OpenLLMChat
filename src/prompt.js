@@ -4,7 +4,7 @@ export const getPrompt = () => "System:\n{system}\n\n{chat}\n\nModel:"
 export function fillPrompt(system, chat) {
     return getPrompt()
         .replace('{system}', system)
-        .replace('{chat}', chat)
+        .replace('{chat}', formatChat(chat))
 }
 
 

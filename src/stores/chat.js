@@ -1,37 +1,44 @@
 import {defineStore} from "pinia"
 import {getConfigStore} from "@/stores/config"
 
+import {postInference} from "@/api"
+import {fillPrompt} from "@/prompt"
+
 export const getChatStore = defineStore('chat', {
     state: () => ({
-        items: get_debug_chat()
+        userTyping: '',
+        history: get_debug_chat()
     }),
     getters: {
-        getItems: (state) => state.items,
+        getUserTyping: (state) => state.userTyping,
+        canUserSubmit: (state) => state.userTyping.length > 8,
+        getHistory: (state) => state.history,
     },
     actions: {
-        addItem(item) {
-            this.items.push({
-                'name': item.name,
-                'icon': item.icon,
-                'text': item.text
-            })
+        setUserTyping(text) {
+            this.userTyping = text
         },
-        addUserMessage(text) {
-            this.addItem({
+        postUserMessage(text) {
+            this.history.push({
                 'name': getConfigStore().getUser.name,
                 'icon': getConfigStore().getUser.icon,
                 'text': text
             })
+
+            this.requestAgentResponse()
         },
-        addAgentMessage(text) {
-            this.addItem({
-                'name': getConfigStore().getAgent.name,
-                'icon': getConfigStore().getAgent.icon,
-                'text': text
-            })
+        requestAgentResponse() {
+            postInference(getConfigStore().getActiveModel, fillPrompt(getConfigStore().getActivePersona, this.history))
+                .then(res => {
+                    this.history.push({
+                        'name': getConfigStore().getAgent.name,
+                        'icon': getConfigStore().getAgent.icon,
+                        'text': res.response
+                    })
+                })
         },
         reset() {
-            this.items = []
+            this.history = []
         }
     },
 })
@@ -42,6 +49,11 @@ function get_debug_chat() {
             'name': 'Model',
             'icon': '🖲',
             'text': 'Hello my name is Bishop, I am here to assist you!'
+        },
+        {
+            'name': 'User',
+            'icon': '🗣',
+            'text': 'Thanks for your help Bishop'
         }
     ]
 }

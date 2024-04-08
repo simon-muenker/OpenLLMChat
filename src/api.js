@@ -1,5 +1,4 @@
-export function inference(model, prompt) {
-    console.log(prompt)
+export function postInference(model, prompt) {
     return fetch("https://inf.cl.uni-trier.de/", {
         method: "POST",
         body: JSON.stringify({

@@ -3,7 +3,7 @@
       :class="[
           { '!left-0 !opacity-100': isOpen },
           'absolute top-0 overscroll-y-auto -left-full w-full h-auto min-h-full',
-          'bg-slate-100 bg-opacity-80 backdrop-blur z-10 transition-all'
+          'bg-slate-100 shadow-inner bg-opacity-60 backdrop-blur z-10 transition-all'
       ]"
   >
     <slot></slot>

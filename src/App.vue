@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-slate-100">
+  <div class="bg-slate-100 shadow-inner">
 
     <Container class="pt-12 min-h-svh">
 
@@ -14,8 +14,6 @@
       <ChatInteraction
           :handle-reset="reset"
           :handle-submit="submit"
-          :is-submit-disabled="isSubmitDisabled"
-          @on-message-change="(newMessage) => this.message = newMessage"
       />
 
       <AppFooter/>
@@ -29,25 +27,23 @@
     </div>
 
     <MenuContainer :is-open="isSidebarOpen">
-      <Container class="pt-12 pb-32 min-h-svh">
+      <Container class="pt-12 pb-32 lg:max-w-[1440px] min-h-svh">
 
         <Headline>configure</Headline>
         <span class="h-16"></span>
 
-        <SubHeadline>select a model</SubHeadline>
-        <ConfigureModel />
-        <div class="my-8"></div>
-
-        <SubHeadline>select a persona</SubHeadline>
-        todo
-        <div class="my-8"></div>
-
-        <SubHeadline>write a persona</SubHeadline>
-        <Textarea
-            :value="getConfigStore().getAgent.persona"
-            class="text-sm italic rounded-xl shadow-xl !bg-white !p-4"
-            @input="(event) => getConfigStore().setAgentPersona(event.target.value)"
-        />
+        <div class="flex flex-col lg:flex-row gap-8">
+          <div>
+            <SubHeadline>select a model</SubHeadline>
+            <div class="h-8"></div>
+            <ConfigureModel />
+          </div>
+          <div>
+            <SubHeadline>select a persona</SubHeadline>
+            <div class="h-8"></div>
+            <ConfigurePersona />
+          </div>
+        </div>
 
       </Container>
     </MenuContainer>
@@ -61,21 +57,19 @@ import Textarea from "@/components/atoms/Textarea.vue"
 import ChatHistory from "@/components/ChatHistory.vue"
 import AppFooter from "@/components/AppFooter.vue"
 
-import {inference} from "@/inference"
-import {fillPrompt, formatChat} from "@/prompt"
-
 import {getChatStore} from "@/stores/chat"
-import {getConfigStore} from "@/stores/config"
 import ConfigureModel from "@/components/ConfigureModel.vue"
 import MenuToggle from "@/components/atoms/MenuToggle.vue"
 import ChatInteraction from "@/components/ChatInteraction.vue"
 import SubHeadline from "@/components/typography/SubHeadline.vue"
 import Headline from "@/components/typography/Headline.vue"
 import MenuContainer from "@/components/atoms/MenuContainer.vue"
+import ConfigurePersona from "@/components/ConfigurePersona.vue"
 
 export default {
   name: 'App',
   components: {
+    ConfigurePersona,
     MenuContainer,
     Headline,
     SubHeadline,
@@ -89,41 +83,24 @@ export default {
   },
   data() {
     return {
-      message: '',
       isLoading: true,
       isSidebarOpen: false
-    }
-  },
-  computed: {
-    isSubmitDisabled() {
-      return this.message.length < 4;
     }
   },
   mounted() {
     //this.reset()
   },
   methods: {
-    getConfigStore,
     getChatStore,
     submit() {
-      getChatStore().addUserMessage(this.message)
-      this.getResponse(getChatStore().getItems)
-      this.message = ''
-    },
-    getResponse(chat) {
       this.isLoading = true
-
-      inference(getConfigStore().getAgent.model.active, fillPrompt(getConfigStore().getAgent.persona, formatChat(chat)))
-          .then(res => getChatStore().addAgentMessage(res.response))
-          .then(() => this.isLoading = false)
+      getChatStore().postUserMessage(getChatStore().getUserTyping)
+        .then(() => this.isLoading = false)
     },
     reset() {
+      this.isLoading = true
       getChatStore().reset()
-      this.getResponse([{
-        name: getConfigStore().getUser.name,
-        icon: getConfigStore().getUser.icon,
-        text: 'Introduce yourself.'
-      }])
+        .then(() => this.isLoading = false)
     },
   }
 }

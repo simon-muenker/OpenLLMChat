@@ -1,13 +1,12 @@
 <template>
-  <div class="bg-white p-3 shadow-2xl rounded-xl hover:drop-shadow-xl transition-all">
+  <Floater>
 
     <div class="flex flex-row gap-3 items-center">
           <Textarea
-              :value="message"
               placeholder="type our message"
-              @input="(event) => {this.message = event.target.value; this.onMessageChange()}"
+              @input="(event) => {getChatStore().setUserTyping(event.target.value)}"
           />
-      <Button :disabled="isSubmitDisabled" @click="handleSubmit">
+      <Button :disabled="!getChatStore().canUserSubmit" @click="handleSubmit">
         <PaperAirplaneIcon class="h-10 w-10 text-teal-600"/>
       </Button>
     </div>
@@ -19,17 +18,22 @@
       <Caption>Generated content may be inaccurate or false.</Caption>
     </div>
 
-  </div>
+  </Floater>
 </template>
 <script>
 import {ArrowPathIcon, PaperAirplaneIcon} from "@heroicons/vue/24/outline"
+
+import {getChatStore} from "@/stores/chat"
+
 import Button from "@/components/atoms/Button.vue"
 import Textarea from "@/components/atoms/Textarea.vue"
 import Caption from "@/components/typography/Caption.vue"
+import Floater from "@/components/atoms/Floater.vue"
 
 export default {
   name: "ChatInteraction",
   components: {
+    Floater,
     Caption,
     Textarea,
     Button,
@@ -37,10 +41,6 @@ export default {
     ArrowPathIcon,
   },
   props: {
-    isSubmitDisabled: {
-      type: Boolean,
-      default: true
-    },
     handleSubmit: {
       type: Function,
       required: true
@@ -50,15 +50,8 @@ export default {
       required: true
     }
   },
-  data() {
-    return {
-      message: '',
-    }
-  },
   methods: {
-    onMessageChange() {
-      this.$emit('onMessageChange', this.message);
-    }
+    getChatStore
   }
 }
 </script>

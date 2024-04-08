@@ -1,18 +1,23 @@
 <template>
   <nav class="flex flex-row justify-evenly items-center gap-4 mx-auto w-full">
-    <div class="rounded-xl bg-white shadow-xl p-3 hover:bg-slate-100 hover:drop-shadow-xl transition-all"
-         @click="onToggle">
-      <CogIcon v-if="!switched" class="h-8 w-8"/>
-      <XMarkIcon v-if="switched" class="h-8 w-8"/>
-    </div>
+    <Button @click="onToggle">
+      <Floater>
+        <CogIcon v-if="!switched" class="h-8 w-8"/>
+        <XMarkIcon v-if="switched" class="h-8 w-8"/>
+      </Floater>
+    </Button>
   </nav>
 </template>
 <script>
 import {CogIcon, XMarkIcon} from "@heroicons/vue/24/outline"
+import Button from "@/components/atoms/Button.vue"
+import Floater from "@/components/atoms/Floater.vue"
 
 export default {
   name: 'MenuToggle',
   components: {
+    Button,
+    Floater,
     CogIcon,
     XMarkIcon,
   },

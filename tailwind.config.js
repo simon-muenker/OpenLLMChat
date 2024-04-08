@@ -7,6 +7,7 @@ module.exports = {
         fontFamily: {},
         screens: {
             sm: "640px",
+            lg: "1440px",
         },
     },
     plugins: [],

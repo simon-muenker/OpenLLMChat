@@ -1,6 +1,6 @@
 <template>
   <nav class="py-4 px-2">
-    <div class="flex flex-col sm:flex-row justify-center sm:justify-between gap-4">
+    <div class="flex flex-col sm:flex-row justify-center sm:justify-between gap-2">
       <a href="https://www.twon-project.eu/" target="_blank">
         <Caption>TWON - TWin of Online Social Networks</Caption>
       </a>
@@ -14,7 +14,6 @@
   </nav>
 </template>
 <script>
-
 import Caption from "@/components/typography/Caption.vue"
 
 export default {

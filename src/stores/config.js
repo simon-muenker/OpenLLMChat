@@ -3,26 +3,36 @@ import {defineStore} from "pinia"
 export const getConfigStore = defineStore('config', {
     state: () => ({
         agent: {
-            name: 'Model',
-            icon: '🖲️',
             model: {
                 active: get_models()[0].id,
                 selection: get_models()
             },
-            persona: 'You are Bishop, an android character introduced in the 1986 film Aliens. You are a trusty ally with unwavering precision and a touch of enigmatic charm. Currently, you are working for the Computational Linguistics Department of the University of Trier as an online assistant. You are willing to help students and researchers. Based on the given chat, continue a helpful but short conversation.'
+            persona: {
+              active: get_personas()[0].id,
+              selection: get_personas()
+            }
         },
         user: {
             name: 'User',
             icon: '🗣️',
         }
     }), getters: {
-        getAgent: (state) => state.agent, getUser: (state) => state.user,
+        getAgent: (state) => state.agent,
+        getUser: (state) => state.user,
+        getActiveModel: (state) => state.agent.model.active,
+        getActivePersona: (state) => state.agent.persona.active,
     }, actions: {
-        setActiveAgentModel(model) {
-            console.log(model)
-            this.agent.model.active = model
-        }, setAgentPersona(persona) {
-            this.agent.persona = persona
+        setActiveModel(id) {
+            this.agent.model.active = id
+
+            console.debug('>> active model set')
+            console.debug(this.agent.model.selection.filter(model => model.id === id)[0])
+        },
+        setActivePersona(id) {
+            this.agent.persona.active = id
+
+            console.debug('>> active persona set')
+            console.debug(this.agent.persona.selection.filter(persona => persona.id === id)[0])
         }
     }
 })

@@ -16,10 +16,11 @@
 <script>
 import Caption from "@/components/typography/Caption.vue"
 
+
 export default {
   name: 'AppFooter',
   components: {
-    Caption
+    Caption,
   },
 }
 </script>

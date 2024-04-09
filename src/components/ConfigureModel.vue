@@ -25,12 +25,14 @@
   </div>
 </template>
 <script>
-import Caption from "@/components/typography/Caption.vue"
+import {getConfigStore} from "@/stores/config"
+
 import Floater from "@/components/atoms/Floater.vue"
 
-import {getConfigStore} from "@/stores/config"
 import Text from "@/components/typography/Text.vue"
 import TextExtraBold from "@/components/typography/TextExtraBold.vue"
+import Caption from "@/components/typography/Caption.vue"
+
 
 export default {
   name: "ConfigureModel",

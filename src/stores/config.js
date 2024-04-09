@@ -8,8 +8,8 @@ export const getConfigStore = defineStore('config', {
                 selection: get_models()
             },
             persona: {
-              active: get_personas()[0].id,
-              selection: get_personas()
+                active: get_personas()[0].id,
+                selection: get_personas()
             }
         },
         user: {
@@ -20,19 +20,25 @@ export const getConfigStore = defineStore('config', {
         getAgent: (state) => state.agent,
         getUser: (state) => state.user,
         getActiveModel: (state) => state.agent.model.active,
+        getActiveModelContent: (state) => {
+            return state.agent.model.selection.filter(model => model.id === state.agent.model.active)[0]
+        },
         getActivePersona: (state) => state.agent.persona.active,
+        getActivePersonaContent: (state) => {
+            return state.agent.persona.selection.filter(persona => persona.id === state.agent.persona.active)[0]
+        },
     }, actions: {
         setActiveModel(id) {
             this.agent.model.active = id
 
             console.debug('>> active model set')
-            console.debug(this.agent.model.selection.filter(model => model.id === id)[0])
+            console.debug(this.getActiveModelContent)
         },
         setActivePersona(id) {
             this.agent.persona.active = id
 
             console.debug('>> active persona set')
-            console.debug(this.agent.persona.selection.filter(persona => persona.id === id)[0])
+            console.debug(this.getActivePersonaContent)
         }
     }
 })

@@ -61,7 +61,7 @@ function get_models() {
             params: '70b',
             author: 'Meta AI',
             origin: 'US',
-            moreLink: ''
+            moreLink: 'https://llama.meta.com/'
         }, {
             id: 'falcon:40b-instruct-q5_1',
             name: 'Falcon',

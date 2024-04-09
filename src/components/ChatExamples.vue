@@ -1,13 +1,14 @@
 <template>
   <div class="flex flex-row gap-4">
-    <Floater v-for="item in getExampleMessages()" class="!p-2">
-      <Button
-          class="italic text-slate-500 text-sm"
-          @click="() => {getChatStore().setUserTyping(item.message); getChatStore().postUserMessage()}"
-      >
+
+    <Button
+        v-for="item in getExampleMessages()"
+        @click="() => {getChatStore().setUserTyping(item.message); getChatStore().postUserMessage()}"
+    >
+      <Floater class="italic text-slate-500 text-sm !p-2">
         {{ item.name }}
-      </Button>
-    </Floater>
+      </Floater>
+    </Button>
   </div>
 </template>
 <script>

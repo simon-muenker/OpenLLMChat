@@ -1,12 +1,16 @@
 <template>
-  <Floater>
+  <Floater @keyup.ctrl.enter="getChatStore().postUserMessage">
 
     <div class="flex flex-row gap-3 items-center">
           <Textarea
+              :value="getChatStore().getUserTyping"
               placeholder="type our message"
               @input="(event) => {getChatStore().setUserTyping(event.target.value)}"
           />
-      <Button :disabled="!getChatStore().canUserSubmit" @click="getChatStore().postUserMessage">
+      <Button
+          :disabled="!getChatStore().canUserSubmit"
+          @click="getChatStore().postUserMessage"
+      >
         <PaperAirplaneIcon class="h-10 w-10 text-teal-600"/>
       </Button>
     </div>

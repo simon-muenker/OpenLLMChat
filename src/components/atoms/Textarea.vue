@@ -1,7 +1,7 @@
 <template>
   <textarea
       ref="self"
-      class="bg-transparent grow p-2.5 text-slate-700 resize-none focus:outline-0"
+      class="bg-transparent grow p-1 text-slate-700 resize-none focus:outline-0"
       @input="update"
   ></textarea>
 </template>

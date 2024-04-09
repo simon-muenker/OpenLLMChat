@@ -12,7 +12,7 @@ export const getChatStore = defineStore('chat', {
     }),
     getters: {
         getUserTyping: (state) => state.userTyping,
-        canUserSubmit: (state) => state.userTyping.length > 8,
+        canUserSubmit: (state) => state.userTyping.length > 8 && !state.loading,
         getHistory: (state) => state.history,
         isHistoryEmpty: (state) => state.history.length === 0,
         isLoading: (state) => state.loading
@@ -27,7 +27,7 @@ export const getChatStore = defineStore('chat', {
                 'icon': getConfigStore().getUser.icon,
                 'text': this.userTyping
             })
-
+            this.setUserTyping('')
             this.requestAgentResponse()
         },
         requestAgentResponse() {
@@ -42,8 +42,8 @@ export const getChatStore = defineStore('chat', {
             postInference(model, prompt)
                 .then(res => {
                     this.history.push({
-                        'name': getConfigStore().getAgent.name,
-                        'icon': getConfigStore().getAgent.icon,
+                        'name': getConfigStore().getActivePersonaContent.name,
+                        'icon': getConfigStore().getActivePersonaContent.icon,
                         'text': res.response
                     })
                 })

@@ -14,7 +14,7 @@ import Button from "@/components/atoms/Button.vue"
 import Floater from "@/components/atoms/Floater.vue"
 
 export default {
-  name: 'MenuToggle',
+  name: 'AppMenu',
   components: {
     Button,
     Floater,

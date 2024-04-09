@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.markdown-message h2 {
+    @apply text-2xl font-bold;
+}
+
+.markdown-message p {
+    @apply leading-relaxed mb-2;
+}
+
+.markdown-message a {
+    @apply underline underline-offset-2;
+}
+
+.markdown-message ul {
+    @apply list-disc space-y-2 pl-3 mb-2;
+}
+
+.markdown-message ol {
+    @apply list-decimal space-y-2 pl-4 mb-2;
+}

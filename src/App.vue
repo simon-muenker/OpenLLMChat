@@ -1,7 +1,7 @@
 <template>
   <div class="bg-slate-100 shadow-inner">
 
-    <Container v-if="!isConfigureOpen" class="pt-12 min-h-svh">
+    <Container v-if="!isConfigureOpen" class="pt-12 pb-24 min-h-svh">
 
       <Headline>OpenLLMChat</Headline>
       <span class="h-16"></span>
@@ -22,7 +22,7 @@
 
     </Container>
 
-    <Container v-if="isConfigureOpen" class="pt-12 pb-32 lg:max-w-[1440px] min-h-svh">
+    <Container v-if="isConfigureOpen" class="pt-12 pb-24 lg:max-w-[1440px] min-h-svh">
 
       <Headline>configure</Headline>
       <span class="h-16"></span>

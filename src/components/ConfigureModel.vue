@@ -10,14 +10,14 @@
       >
       <label :for=item.id class="cursor-pointer">
         <Floater
-            class="border-2 border-r-8 border-transparent"
+            class="pr-1 border-2 border-r-8 border-transparent"
             :class="[item.id === getConfigStore().getActiveModel ? '!border-green-400' : '']"
         >
           <TextExtraBold>{{ item.name }}</TextExtraBold>&nbsp;
-          <Caption>({{ item.type }}, {{ item.params }})</Caption>
+          <Caption class="whitespace-nowrap">{{ item.type }}, {{ item.params }}</Caption>
           <br>
           <Text>{{ item.author }}</Text>&nbsp;
-          <Caption>({{ item.origin }})</Caption>&nbsp;
+          <Caption>{{ item.origin }}</Caption>&nbsp;
           <Caption><a :href=item.moreLink class="underline underline-offset-2" target="_blank">more</a></Caption>
         </Floater>
       </label>

@@ -3,6 +3,7 @@
 
     <div class="flex flex-row gap-3 items-center">
           <Textarea
+              class="text-sm sm:text-base"
               :value="getChatStore().getUserTyping"
               placeholder="type our message"
               @input="(event) => {getChatStore().setUserTyping(event.target.value)}"

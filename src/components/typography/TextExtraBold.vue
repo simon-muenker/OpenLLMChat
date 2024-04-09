@@ -1,5 +1,5 @@
 <template>
-  <span class="font-extrabold text-black">
+  <span class="font-extrabold text-black text-sm sm:text-base">
     <slot></slot>
   </span>
 </template>

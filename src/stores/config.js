@@ -75,15 +75,15 @@ function get_models() {
             name: 'Qwen',
             type: 'chat',
             params: '72b',
-            author: 'Alibaba Cloud',
-            origin: 'China',
+            author: 'Alibaba',
+            origin: 'PRC',
             moreLink: 'https://github.com/QwenLM/Qwen'
         }, {
             id: 'mistral:7b-instruct-v0.2-q6_K',
-            name: 'Mistral AI',
+            name: 'Mistral',
             type: 'instruct',
             params: '7b',
-            author: 'Europe',
+            author: 'Mistral AI',
             origin: 'EU',
             moreLink: 'https://mistral.ai/news/announcing-mistral-7b/'
         }, {

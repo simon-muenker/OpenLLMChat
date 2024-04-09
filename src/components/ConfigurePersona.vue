@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-cols-1 gap-8">
+  <div class="grid grid-cols-1 gap-4">
     <template v-for="item in getConfigStore().getAgent.persona.selection">
       <input
           :id=item.id
@@ -9,7 +9,10 @@
           @change="event => {getConfigStore().setActivePersona(event.target.value)}"
       >
       <label :for=item.id class="cursor-pointer">
-        <Floater :class="[item.id === getConfigStore().getActivePersona ? 'border-2 border-r-8 border-green-400' : '']">
+        <Floater
+            class="pr-1 sm:pr-3 border-2 border-r-8 border-transparent"
+            :class="[item.id === getConfigStore().getActivePersona ? '!border-green-400' : '']"
+        >
           <div class="flex gap-2 w-fit">
             <div class="shrink-0 text-2xl h-8 w-8 text-center leading-tight">
               {{ item.icon }}

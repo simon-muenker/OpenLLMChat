@@ -4,7 +4,7 @@
 
       <div class="flex gap-4">
 
-        <div class="shrink-0 text-3xl text-center leading-tight">
+        <div class="shrink-0 text-3xl w-10 text-center leading-tight">
           {{ item.icon }}
         </div>
 
@@ -15,7 +15,7 @@
         </div>
 
         <div class="flex items-end">
-          <Floater v-if="item.name === 'Model'" class="!p-1.5 leading-none -mb-4">
+          <Floater v-if="item.name !== 'User'" class="!p-1.5 leading-none -mb-4">
             <Button>
               <ArrowTrendingUpIcon class="h-4 w-4 text-green-600"/>
             </Button>

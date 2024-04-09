@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-cols-2 gap-4 sm:gap-8">
+  <div class="grid grid-cols-2 gap-4">
     <template v-for="item in getConfigStore().getAgent.model.selection">
       <input
           :id=item.id
@@ -10,7 +10,7 @@
       >
       <label :for=item.id class="cursor-pointer">
         <Floater
-            class="pr-1 border-2 border-r-8 border-transparent"
+            class="pr-1 sm:pr-3 border-2 border-r-8 border-transparent"
             :class="[item.id === getConfigStore().getActiveModel ? '!border-green-400' : '']"
         >
           <TextExtraBold>{{ item.name }}</TextExtraBold>&nbsp;

@@ -9,9 +9,10 @@
         </div>
 
         <div>
-          <TextExtraBold v-if="item.name === 'User'" class="block">{{ item.name }}</TextExtraBold>
-          <TextBold v-else class="block">{{ item.name }}</TextBold>
-          <Text v-html="item.text"/>
+          <TextExtraBold v-if="item.name === 'User'">{{ item.name }}</TextExtraBold>
+          <TextBold v-else>{{ item.name }}</TextBold>
+          <Caption v-if="item.name !== 'User'" class="block">{{ item.model }}</Caption>
+          <Text class="markdown-message pt-2 block" v-html="item.text"/>
         </div>
 
         <div class="flex items-end">
@@ -45,11 +46,13 @@ import Button from "@/components/atoms/Button.vue"
 import Text from "@/components/typography/Text.vue"
 import TextBold from "@/components/typography/TextBold.vue"
 import TextExtraBold from "@/components/typography/TextExtraBold.vue"
+import Caption from "@/components/typography/Caption.vue";
 
 
 export default {
   name: "ChatHistory",
   components: {
+    Caption,
     ArrowTrendingUpIcon,
     ArrowTrendingDownIcon,
     Button,

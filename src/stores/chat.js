@@ -44,6 +44,7 @@ export const getChatStore = defineStore('chat', {
                     this.history.push({
                         'name': getConfigStore().getActivePersonaContent.name,
                         'icon': getConfigStore().getActivePersonaContent.icon,
+                        'model': model,
                         'text': res.response
                     })
                 })

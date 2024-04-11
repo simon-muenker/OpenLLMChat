@@ -35,3 +35,8 @@ export function getModels() {
     return fetch("https://inf.cl.uni-trier.de/models/", {method: "GET"})
         .then((response) => response.json())
 }
+
+export function getPersonas() {
+    return fetch("https://inf.cl.uni-trier.de/personas/", {method: "GET"})
+        .then((response) => response.json())
+}

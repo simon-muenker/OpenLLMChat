@@ -2,7 +2,6 @@ import {defineStore} from "pinia"
 import {getConfigStore} from "@/stores/config"
 
 import {postInference} from "@/api"
-import {fillPrompt} from "@/prompt"
 
 export const getChatStore = defineStore('chat', {
     state: () => ({
@@ -33,18 +32,24 @@ export const getChatStore = defineStore('chat', {
         requestAgentResponse() {
             this.loading = true
 
-            let model = getConfigStore().getActiveModel
-            let prompt = fillPrompt(getConfigStore().getActivePersonaContent.prompt, this.history)
+            console.debug(`>> model: ${getConfigStore().getActiveModel}`)
+            console.debug(`>> model: ${getConfigStore().getActivePersonaContent.prompt}`)
+            console.debug(`>> prompt:\n${this.history}`)
 
-            console.debug(`>> model: ${model}`)
-            console.debug(`>> prompt:\n${prompt}`)
-
-            postInference(model, prompt)
+            postInference(
+                getConfigStore().getActiveModel,
+                getConfigStore().getActivePersonaContent.prompt,
+                this.history.map(item => ({
+                    role: item.name === getConfigStore().getUser.name ? 'user' : 'assistant',
+                    content: item.text
+                }))
+            )
                 .then(res => {
                     this.history.push({
+                        'id': res.id,
                         'name': getConfigStore().getActivePersonaContent.name,
                         'icon': getConfigStore().getActivePersonaContent.icon,
-                        'model': model,
+                        'model': getConfigStore().getActiveModel,
                         'text': res.response
                     })
                 })

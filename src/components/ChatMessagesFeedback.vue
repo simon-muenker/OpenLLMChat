@@ -3,7 +3,7 @@
     <Button
         v-if="!feedback || feedback === 'positive'"
         :disabled="feedback"
-        @click.once="handleFeedback('positive')"
+        @click.once="getChatStore().postUserFeedback(id, 'positive')"
 
     >
       <ArrowTrendingUpIcon class="h-4 w-4 text-green-600 transition-all"/>
@@ -12,7 +12,7 @@
     <Button
         v-if="!feedback || feedback === 'negative'"
         :disabled="feedback"
-        @click.once="handleFeedback('negative')"
+        @click.once="getChatStore().postUserFeedback(id, 'negative')"
     >
       <ArrowTrendingDownIcon class="h-4 w-4 text-red-600 transition-all"/>
     </Button>
@@ -22,7 +22,7 @@
 <script>
 import {ArrowTrendingDownIcon, ArrowTrendingUpIcon} from "@heroicons/vue/24/outline"
 
-import {postFeedback} from "@/api"
+import {getChatStore} from "@/stores/chat"
 
 import Floater from "@/components/atoms/Floater.vue"
 import Button from "@/components/atoms/Button.vue"
@@ -38,17 +38,10 @@ export default {
   },
   props: {
     id: String,
-  },
-  data() {
-    return {
-      feedback: null
-    }
+    feedback: String,
   },
   methods: {
-    handleFeedback(content) {
-      postFeedback(this.id, content)
-          .then(() => this.feedback = content)
-    }
+    getChatStore,
   }
 }
 </script>

@@ -8,7 +8,7 @@
         class="text-6xl font-bold text-slate-500 text-center animate-pulse">...</span>
   <span class="h-8"></span>
 
-  <ChatExamples v-if="getChatStore().isHistoryEmpty"/>
+  <ChatExamples v-if="getChatStore().isMessagesEmpty"/>
 
   <span class="h-0.5"></span>
 

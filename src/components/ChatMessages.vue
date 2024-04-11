@@ -16,7 +16,7 @@
         </div>
 
         <div class="flex items-end">
-          <ChatMessagesFeedback v-if="item.name !== 'User'" :id="item.id"/>
+          <ChatMessagesFeedback v-if="item.name !== 'User'" :id="item.id" :feedback="item.feedback"/>
         </div>
 
       </div>
@@ -59,7 +59,7 @@ export default {
   },
   computed: {
     getParsedMessages() {
-      return getChatStore().getHistory.map((item) => {
+      return getChatStore().getMessages.map((item) => {
         item.text = marked.parse(item.text)
         return item
       })

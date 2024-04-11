@@ -1,19 +1,19 @@
 import {defineStore} from "pinia"
 import {getConfigStore} from "@/stores/config"
 
-import {postInference} from "@/api"
+import {postFeedback, postInference} from "@/api"
 
 export const getChatStore = defineStore('chat', {
     state: () => ({
         userTyping: '',
-        history: [], //get_debug_chat()
+        messages: [], //get_debug_chat()
         loading: false,
     }),
     getters: {
         getUserTyping: (state) => state.userTyping,
         canUserSubmit: (state) => state.userTyping.length > 8 && !state.loading,
-        getHistory: (state) => state.history,
-        isHistoryEmpty: (state) => state.history.length === 0,
+        getMessages: (state) => state.messages,
+        isMessagesEmpty: (state) => state.messages.length === 0,
         isLoading: (state) => state.loading
     },
     actions: {
@@ -21,10 +21,13 @@ export const getChatStore = defineStore('chat', {
             this.userTyping = text
         },
         postUserMessage() {
-            this.history.push({
-                'name': getConfigStore().getUser.name,
-                'icon': getConfigStore().getUser.icon,
-                'text': this.userTyping
+            this.messages.push({
+                id: -1,
+                name: getConfigStore().getUser.name,
+                icon: getConfigStore().getUser.icon,
+                text: this.userTyping,
+                model: null,
+                feedback: null,
             })
             this.setUserTyping('')
             this.requestAgentResponse()
@@ -33,48 +36,41 @@ export const getChatStore = defineStore('chat', {
             this.loading = true
 
             console.debug(`>> model: ${getConfigStore().getActiveModel}`)
-            console.debug(`>> model: ${getConfigStore().getActivePersonaContent.prompt}`)
-            console.debug(`>> prompt:\n${this.history}`)
+            console.debug(`>> persona: ${getConfigStore().getActivePersonaContent.prompt}`)
+            console.debug(`>> messages:`)
+            console.debug(this.messages)
 
             postInference(
                 getConfigStore().getActiveModel,
                 getConfigStore().getActivePersonaContent.prompt,
-                this.history.map(item => ({
+                this.messages.map(item => ({
                     role: item.name === getConfigStore().getUser.name ? 'user' : 'assistant',
                     content: item.text
                 }))
             )
                 .then(res => {
-                    this.history.push({
-                        'id': res.id,
-                        'name': getConfigStore().getActivePersonaContent.name,
-                        'icon': getConfigStore().getActivePersonaContent.icon,
-                        'model': getConfigStore().getActiveModel,
-                        'text': res.response
+                    this.messages.push({
+                        id: res.id,
+                        name: getConfigStore().getActivePersonaContent.name,
+                        icon: getConfigStore().getActivePersonaContent.icon,
+                        model: getConfigStore().getActiveModel,
+                        text: res.response,
+                        feedback: null,
                     })
                 })
                 .then(() => this.loading = false)
         },
+        postUserFeedback(id, content) {
+            postFeedback(id, content)
+                .then(() => {
+                    this.messages.filter(item => item.id === id)[0].feedback = content
+                })
+        },
         reset() {
-            this.history = []
+            this.messages = []
         }
     },
 })
-
-function get_debug_chat() {
-    return [
-        {
-            'name': 'Model',
-            'icon': '🖲',
-            'text': 'Hello my name is Bishop, I am here to assist you!'
-        },
-        {
-            'name': 'User',
-            'icon': '🗣',
-            'text': 'Thanks for your help Bishop'
-        }
-    ]
-}
 
 export function getExampleMessages() {
     return [

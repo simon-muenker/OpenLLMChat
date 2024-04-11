@@ -16,15 +16,7 @@
         </div>
 
         <div class="flex items-end">
-          <Floater v-if="item.name !== 'User'" class="!p-1.5 leading-none -mb-4">
-            <Button>
-              <ArrowTrendingUpIcon class="h-4 w-4 text-green-600"/>
-            </Button>
-            <br>
-            <Button>
-              <ArrowTrendingDownIcon class="h-4 w-4 text-red-600"/>
-            </Button>
-          </Floater>
+          <ChatMessagesFeedback v-if="item.name !== 'User'" :id="item.id"/>
         </div>
 
       </div>
@@ -46,13 +38,14 @@ import Button from "@/components/atoms/Button.vue"
 import Text from "@/components/typography/Text.vue"
 import TextBold from "@/components/typography/TextBold.vue"
 import TextExtraBold from "@/components/typography/TextExtraBold.vue"
-import Caption from "@/components/typography/Caption.vue";
+import Caption from "@/components/typography/Caption.vue"
+
+import ChatMessagesFeedback from "@/components/ChatMessagesFeedback.vue"
 
 
 export default {
-  name: "ChatHistory",
+  name: "ChatMessages",
   components: {
-    Caption,
     ArrowTrendingUpIcon,
     ArrowTrendingDownIcon,
     Button,
@@ -60,6 +53,9 @@ export default {
     Text,
     TextBold,
     TextExtraBold,
+    Caption,
+    ChatMessagesFeedback,
+
   },
   computed: {
     getParsedMessages() {

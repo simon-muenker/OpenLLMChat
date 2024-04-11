@@ -13,6 +13,7 @@
           <TextBold v-else>{{ item.name }}</TextBold>
           <Caption v-if="item.name !== 'User'" class="block">{{ item.model }}</Caption>
           <Text class="markdown-message pt-2 block" v-html="item.text"/>
+          <Caption v-if="item.name !== 'User'" class="block">id: {{ item.id }}</Caption>
         </div>
 
         <div class="flex items-end">

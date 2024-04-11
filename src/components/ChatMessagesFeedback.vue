@@ -6,10 +6,7 @@
         @click.once="handleFeedback('positive')"
 
     >
-      <ArrowTrendingUpIcon
-          :class="[feedback === 'positive' ? 'h-5 w-5' : '']"
-          class="h-4 w-4 text-green-600 transition-all"
-      />
+      <ArrowTrendingUpIcon class="h-4 w-4 text-green-600 transition-all"/>
     </Button>
     <br v-if="!feedback">
     <Button
@@ -17,10 +14,7 @@
         :disabled="feedback"
         @click.once="handleFeedback('negative')"
     >
-      <ArrowTrendingDownIcon
-          :class="[feedback === 'negative' ? 'h-5 w-5' : '']"
-          class="h-4 w-4 text-red-600 transition-all"
-      />
+      <ArrowTrendingDownIcon class="h-4 w-4 text-red-600 transition-all"/>
     </Button>
   </Floater>
 </template>

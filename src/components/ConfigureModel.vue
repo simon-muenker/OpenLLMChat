@@ -18,7 +18,7 @@
           <br>
           <Text>{{ item.author }}</Text>&nbsp;
           <Caption>{{ item.origin }}</Caption>&nbsp;
-          <Caption><a :href=item.moreLink class="underline underline-offset-2" target="_blank">more</a></Caption>
+          <Caption><a :href=item.more_link class="underline underline-offset-2" target="_blank">more</a></Caption>
         </Floater>
       </label>
     </template>

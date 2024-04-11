@@ -1,11 +1,13 @@
 import {defineStore} from "pinia"
+import {getModels} from "@/api"
+
 
 export const getConfigStore = defineStore('config', {
     state: () => ({
         agent: {
             model: {
-                active: get_models()[0].id,
-                selection: get_models()
+                active: '',
+                selection: []
             },
             persona: {
                 active: get_personas()[0].id,
@@ -16,7 +18,8 @@ export const getConfigStore = defineStore('config', {
             name: 'User',
             icon: '🗣️',
         }
-    }), getters: {
+    }),
+    getters: {
         getAgent: (state) => state.agent,
         getUser: (state) => state.user,
         getActiveModel: (state) => state.agent.model.active,
@@ -27,7 +30,15 @@ export const getConfigStore = defineStore('config', {
         getActivePersonaContent: (state) => {
             return state.agent.persona.selection.filter(persona => persona.id === state.agent.persona.active)[0]
         },
-    }, actions: {
+    },
+    actions: {
+        init() {
+            getModels()
+                .then(res => {
+                    this.agent.model.selection = res
+                    this.agent.model.active = this.agent.model.selection[0].id
+                })
+        },
         setActiveModel(id) {
             this.agent.model.active = id
 
@@ -43,60 +54,6 @@ export const getConfigStore = defineStore('config', {
     }
 })
 
-
-function get_models() {
-    return [
-        {
-            id: 'mixtral:8x7b-instruct-v0.1-q6_K',
-            name: 'Mixtral',
-            type: 'instruct',
-            params: '8x7b',
-            author: 'Mistral AI',
-            origin: 'EU',
-            moreLink: 'https://mistral.ai/news/mixtral-of-experts/'
-        }, {
-            id: 'llama2:70b-chat-q6_K',
-            name: 'Llama2',
-            type: 'chat',
-            params: '70b',
-            author: 'Meta AI',
-            origin: 'US',
-            moreLink: 'https://llama.meta.com/'
-        }, {
-            id: 'falcon:40b-instruct-q5_1',
-            name: 'Falcon',
-            type: 'instruct',
-            params: '40b',
-            author: 'TII',
-            origin: 'UAE',
-            moreLink: 'https://falconllm.tii.ae/falcon-40b.html'
-        }, {
-            id: 'qwen:72b-chat-v1.5-q6_K',
-            name: 'Qwen',
-            type: 'chat',
-            params: '72b',
-            author: 'Alibaba',
-            origin: 'PRC',
-            moreLink: 'https://github.com/QwenLM/Qwen'
-        }, {
-            id: 'mistral:7b-instruct-v0.2-q6_K',
-            name: 'Mistral',
-            type: 'instruct',
-            params: '7b',
-            author: 'Mistral AI',
-            origin: 'EU',
-            moreLink: 'https://mistral.ai/news/announcing-mistral-7b/'
-        }, {
-            id: 'gemma:7b-instruct-q6_K',
-            name: 'Gemma',
-            type: 'instruct',
-            params: '7b',
-            author: 'Google',
-            origin: 'US',
-            moreLink: 'https://blog.google/technology/developers/gemma-open-models/'
-        }
-    ]
-}
 
 function get_personas() {
     return [

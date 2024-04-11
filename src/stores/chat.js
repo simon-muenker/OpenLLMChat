@@ -64,28 +64,12 @@ export const getChatStore = defineStore('chat', {
             postFeedback(id, content)
                 .then(() => {
                     this.messages.filter(item => item.id === id)[0].feedback = content
+                    console.debug(`>> feedback: ${id} - ${content}`)
                 })
         },
         reset() {
             this.messages = []
+            console.debug('>> chat store reset')
         }
     },
 })
-
-export function getExampleMessages() {
-    return [
-        {
-            name: 'introduce yourself',
-            message: 'Introduce yourself in a creative way.',
-        },
-        {
-            name: 'explain NLP',
-            message: 'Explain the research field of Natural Language Processing.',
-        },
-        {
-            name: 'discuss AI risks ',
-            message: 'Discuss the risk of generative AI on society.',
-        }
-
-    ]
-}

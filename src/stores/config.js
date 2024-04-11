@@ -36,14 +36,14 @@ export const getConfigStore = defineStore('config', {
             getModels()
                 .then(res => {
                     this.agent.model.selection = res
-                    this.agent.model.active = this.agent.model.selection[0].id
+                    this.agent.model.active = 'mixtral:8x7b-instruct-v0.1-q6_K'
                     console.debug('>> models retrieved')
                 })
 
             getPersonas()
                 .then(res => {
                     this.agent.persona.selection = res
-                    this.agent.persona.active = this.agent.persona.selection[0].id
+                    this.agent.persona.active = '_blank'
                     console.debug('>> personas retrieved')
                 })
         },

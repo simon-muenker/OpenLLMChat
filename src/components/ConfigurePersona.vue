@@ -14,7 +14,7 @@
             :class="[item.id === getConfigStore().getActivePersona ? '!border-green-400' : '']"
         >
           <div class="flex gap-2 w-fit">
-            <div class="shrink-0 text-2xl h-8 w-8 text-center leading-tight">
+            <div class="shrink-0 text-2xl h-8 w-8 text-center leading-tight select-none">
               {{ item.icon }}
             </div>
             <div>

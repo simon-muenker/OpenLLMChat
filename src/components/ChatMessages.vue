@@ -4,7 +4,7 @@
 
       <div class="flex gap-4">
 
-        <div class="shrink-0 text-3xl w-10 text-center leading-tight">
+        <div class="shrink-0 text-3xl w-10 text-center leading-tight select-none">
           {{ item.icon }}
         </div>
 

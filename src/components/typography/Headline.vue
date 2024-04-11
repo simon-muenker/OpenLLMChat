@@ -1,5 +1,5 @@
 <template>
-  <h1 class="text-white text-5xl sm:text-6xl font-extrabold tracking-wide drop-shadow-2xl">
+  <h1 class="text-white text-5xl sm:text-6xl font-extrabold tracking-wide drop-shadow-2xl select-none">
     <slot></slot>
   </h1>
 </template>

@@ -3,7 +3,6 @@
 
     <div class="flex flex-row gap-3 items-center">
           <Textarea
-              class="text-sm sm:text-base"
               :value="getChatStore().getUserTyping"
               placeholder="type our message"
               @input="(event) => {getChatStore().setUserTyping(event.target.value)}"
@@ -20,7 +19,7 @@
       <Button @click="getChatStore().reset">
         <ArrowPathIcon class="h-5 w-5 text-red-600"/>
       </Button>
-      <Caption>Generated content may be inaccurate or false.</Caption>
+      <Caption class="select-none">Generated content may be inaccurate or false.</Caption>
     </div>
 
   </Floater>

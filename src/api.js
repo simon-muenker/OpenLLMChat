@@ -1,9 +1,8 @@
-export function postInference(model, system, messages) {
+export function postChat(model, messages) {
     return fetch("https://inf.cl.uni-trier.de/chat/", {
         method: "POST",
         body: JSON.stringify({
             model: model,
-            system: system,
             messages: messages,
         }),
         headers: {

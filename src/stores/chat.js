@@ -1,7 +1,7 @@
 import {defineStore} from "pinia"
 import {getConfigStore} from "@/stores/config"
 
-import {postFeedback, postInference} from "@/api"
+import {postChat, postFeedback} from "@/api"
 
 export const getChatStore = defineStore('chat', {
     state: () => ({
@@ -36,17 +36,19 @@ export const getChatStore = defineStore('chat', {
             this.loading = true
 
             console.debug(`>> model: ${getConfigStore().getActiveModel}`)
-            console.debug(`>> persona: ${getConfigStore().getActivePersonaContent.prompt}`)
+            console.debug(`>> system: ${getConfigStore().getActivePersonaContent.prompt}`)
             console.debug(`>> messages:`)
             console.debug(this.messages)
 
-            postInference(
+            postChat(
                 getConfigStore().getActiveModel,
-                getConfigStore().getActivePersonaContent.prompt,
-                this.messages.map(item => ({
+                [{
+                    role: 'system',
+                    content: getConfigStore().getActivePersonaContent.prompt
+                }].concat(this.messages.map(item => ({
                     role: item.name === getConfigStore().getUser.name ? 'user' : 'assistant',
                     content: item.text
-                }))
+                })))
             )
                 .then(res => {
                     this.messages.push({

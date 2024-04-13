@@ -1,25 +1,25 @@
 <template>
-  <Floater @keyup.ctrl.enter="getChatStore().postUserMessage">
+  <Floater @keyup.ctrl.enter="submitMessage">
 
     <div class="flex flex-row gap-3 items-center">
           <Textarea
-              :value="getChatStore().getUserTyping"
+              :value="getTyping"
               placeholder="type our message"
-              @input="(event) => {getChatStore().setUserTyping(event.target.value)}"
+              @input="(event) => {setTyping(event.target.value)}"
           />
       <Button
-          :disabled="!getChatStore().canUserSubmit"
-          @click="getChatStore().postUserMessage"
+          :disabled="canSubmit"
+          @click="submitMessage"
       >
         <PaperAirplaneIcon class="h-10 w-10 text-teal-600"/>
       </Button>
     </div>
 
     <div class="flex flex-row gap-3 justify-between items-center">
-      <Button @click="getChatStore().reset">
+      <Button @click="doReset">
         <ArrowPathIcon class="h-5 w-5 text-red-600"/>
       </Button>
-      <Caption class="select-none">Generated content may be inaccurate or false.</Caption>
+      <Caption class="select-none self-end">Generated content may be inaccurate or false.</Caption>
     </div>
 
   </Floater>
@@ -45,6 +45,13 @@ export default {
     Textarea,
     Button,
     Caption,
+  },
+  props: {
+    getTyping: Object,
+    setTyping: Function,
+    canSubmit: Boolean,
+    submitMessage: Function,
+    doReset: Function,
   },
   methods: {
     getChatStore,

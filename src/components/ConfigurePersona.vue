@@ -1,17 +1,16 @@
 <template>
-  <div class="grid grid-cols-1 gap-4">
-    <template v-for="item in getConfigStore().getAgent.persona.selection">
-      <input
-          :id=item.id
-          :value=item.id
-          class="hidden"
-          type=radio
-          @change="event => {getConfigStore().setActivePersona(event.target.value)}"
-      >
-      <label :for=item.id class="cursor-pointer">
+  <form class="grid grid-cols-1 gap-4">
+    <template v-for="item in getAppStore().getPersonas">
+      <label class="cursor-pointer">
+        <input
+            :value=item.id
+            class="hidden"
+            type=radio
+            @change="event => {setActive(event.target.value)}"
+        >
         <Floater
+            :class="[getActive && item.id === getActive.id ? '!border-green-400' : '']"
             class="pr-1 sm:pr-3 border-2 border-r-8 border-transparent"
-            :class="[item.id === getConfigStore().getActivePersona ? '!border-green-400' : '']"
         >
           <div class="flex gap-2 w-fit">
             <div class="shrink-0 text-2xl h-8 w-8 text-center leading-tight select-none">
@@ -25,13 +24,14 @@
         </Floater>
       </label>
     </template>
-  </div>
+  </form>
 </template>
 <script>
+import {getAppStore} from "@/stores/app"
+
 import Caption from "@/components/typography/Caption.vue"
 import Floater from "@/components/atoms/Floater.vue"
 
-import {getConfigStore} from "@/stores/config"
 import TextExtraBold from "@/components/typography/TextExtraBold.vue"
 
 export default {
@@ -41,8 +41,12 @@ export default {
     Caption,
     Floater
   },
+  props: {
+    setActive: Function,
+    getActive: Object
+  },
   methods: {
-    getConfigStore,
+    getAppStore,
   }
 }
 </script>

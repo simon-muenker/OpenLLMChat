@@ -19,7 +19,7 @@
         </div>
 
         <div class="flex items-end">
-          <ChatMessagesFeedback v-if="item.name !== 'User'" :id="item.id" :feedback="item.feedback"/>
+          <ChatMessagesFeedback v-if="item.id" :id="item.id" :feedback="item.feedback"/>
         </div>
 
       </div>
@@ -33,7 +33,6 @@ import {marked} from "marked"
 import {ArrowTrendingDownIcon, ArrowTrendingUpIcon} from "@heroicons/vue/24/outline"
 
 import {getChatStore} from "@/stores/chat"
-import {getConfigStore} from "@/stores/config"
 
 import Floater from "@/components/atoms/Floater.vue"
 import Button from "@/components/atoms/Button.vue"
@@ -60,16 +59,16 @@ export default {
     ChatMessagesFeedback,
 
   },
+  props: {
+    messages: Array,
+  },
   computed: {
     getParsedMessages() {
-      return getChatStore().getMessages.map((item) => {
+      return this.messages.map((item) => {
         item.text = marked.parse(item.text)
         return item
       })
     },
-  },
-  methods: {
-    getConfigStore,
   }
 }
 </script>

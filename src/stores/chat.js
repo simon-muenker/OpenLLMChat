@@ -1,61 +1,63 @@
 import {defineStore} from "pinia"
-import {getConfigStore} from "@/stores/config"
+
+import {getAppStore} from "@/stores/app"
 
 import {postChat, postFeedback} from "@/api"
 
 export const getChatStore = defineStore('chat', {
     state: () => ({
         userTyping: '',
-        messages: [], //get_debug_chat()
+        messages: [],
         loading: false,
+        agent: {
+            model: null,
+            persona: null,
+        }
     }),
     getters: {
         getUserTyping: (state) => state.userTyping,
         canUserSubmit: (state) => state.userTyping.length > 8 && !state.loading,
         getMessages: (state) => state.messages,
         isMessagesEmpty: (state) => state.messages.length === 0,
-        isLoading: (state) => state.loading
+        isLoading: (state) => state.loading,
+        getModel: (state) => state.agent.model,
+        getPersona: (state) => state.agent.persona,
+        isConfigured: (state) => state.agent.model && state.agent.persona
     },
     actions: {
         setUserTyping(text) {
             this.userTyping = text
         },
+        setModel(model_id) {
+            this.agent.model = getAppStore().findModelById(model_id)
+            console.debug('>> model set')
+            console.debug(this.getModel)
+        },
+        setPersona(persona_id) {
+            this.agent.persona = getAppStore().findPersonaById(persona_id)
+            console.debug('>> persona set')
+            console.debug(this.getPersona)
+        },
         postUserMessage() {
-            this.messages.push({
-                id: -1,
-                name: getConfigStore().getUser.name,
-                icon: getConfigStore().getUser.icon,
-                text: this.userTyping,
-                model: null,
-                feedback: null,
-            })
+            this.messages.push(getAppStore().formatUserMessage(this.getUserTyping))
             this.setUserTyping('')
             this.requestAgentResponse()
         },
         requestAgentResponse() {
             this.loading = true
 
-            console.debug(`>> model: ${getConfigStore().getActiveModel}`)
-            console.debug(`>> system: ${getConfigStore().getActivePersonaContent.prompt}`)
+            console.debug(`>> model: ${this.getModel.id}`)
+            console.debug(`>> system: ${this.getPersona.id}`)
             console.debug(`>> messages:`)
             console.debug(this.messages)
 
-            postChat(
-                getConfigStore().getActiveModel,
-                [{
-                    role: 'system',
-                    content: getConfigStore().getActivePersonaContent.prompt
-                }].concat(this.messages.map(item => ({
-                    role: item.name === getConfigStore().getUser.name ? 'user' : 'assistant',
-                    content: item.text
-                })))
-            )
+            postChat(this.getModel.id, getAppStore().formatChat(this.getPersona.prompt, this.getMessages))
                 .then(res => {
                     this.messages.push({
                         id: res.id,
-                        name: getConfigStore().getActivePersonaContent.name,
-                        icon: getConfigStore().getActivePersonaContent.icon,
-                        model: getConfigStore().getActiveModel,
+                        name: this.getPersona.name,
+                        icon: this.getPersona.icon,
+                        model: this.getModel.id,
                         text: res.response,
                         feedback: null,
                     })

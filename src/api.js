@@ -18,6 +18,11 @@ export function postFeedback(id, content) {
         .then((response) => response.data)
 }
 
+export function postRank(winner, loser) {
+    return instance.post("/rank/", {winner: winner, loser: loser})
+        .then((response) => response.data)
+}
+
 export function getModels() {
     return instance.get("/models/").then((response) => response.data)
 }

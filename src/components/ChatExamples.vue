@@ -3,7 +3,7 @@
 
     <Button
         v-for="item in getMessages()"
-        @click="() => {getChatStore().setUserTyping(item.message); getChatStore().postUserMessage()}"
+        @click="() => {clickMessage(item.message)}"
     >
       <Floater class="italic text-slate-500 text-sm !p-2">
         {{ item.name }}
@@ -29,6 +29,9 @@ export default {
   methods: {
     getChatStore,
     getMessages
+  },
+  props: {
+    clickMessage: Function,
   }
 }
 </script>

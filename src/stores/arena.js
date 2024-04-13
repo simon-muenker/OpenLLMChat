@@ -83,7 +83,7 @@ export const getArenaStore = defineStore('arena', {
         },
         reset() {
             this.submitted = false
-            this.feeback = false
+            this.feedback = false
             this.agents.forEach(agent => {
                 agent.messages = []
             })

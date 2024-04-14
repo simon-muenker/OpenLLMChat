@@ -9,8 +9,8 @@
             @change="(event) => {setActive(event.target.value)}"
         >
         <Floater
-            class="pr-1 sm:pr-3 border-2 border-r-8 border-transparent"
             :class="[getActive && item.id === getActive.id ? '!border-green-400' : '']"
+            class="pr-1 sm:pr-3 border-2 border-r-8 border-transparent"
         >
           <TextExtraBold>{{ item.name }}</TextExtraBold>&nbsp;
           <Caption class="whitespace-nowrap">{{ item.type }}, {{ item.params }}</Caption>
@@ -25,7 +25,6 @@
 </template>
 <script>
 import {getAppStore} from "@/stores/app"
-import {getChatStore} from "@/stores/chat"
 
 import Floater from "@/components/atoms/Floater.vue"
 
@@ -43,12 +42,18 @@ export default {
     Floater
   },
   props: {
-    setActive: Function,
-    getActive: Object
+    setActive: {
+      type: Function,
+      required: true,
+    },
+    getActive: {
+      type: Object,
+      required: true,
+    },
   },
   methods: {
-    getChatStore,
     getAppStore,
   }
 }
+
 </script>

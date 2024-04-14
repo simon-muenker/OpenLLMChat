@@ -12,7 +12,7 @@ export default {
   props: {
     initialHeight: {
       type: Number,
-      default: 72
+      default: 72,
     }
   },
   mounted() {

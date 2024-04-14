@@ -37,13 +37,19 @@ import TextExtraBold from "@/components/typography/TextExtraBold.vue"
 export default {
   name: "ConfigurePersona",
   components: {
-    TextExtraBold,
     Caption,
-    Floater
+    Floater,
+    TextExtraBold,
   },
   props: {
-    setActive: Function,
-    getActive: Object
+    setActive: {
+      type: Function,
+      required: true,
+    },
+    getActive: {
+      type: Object,
+      required: true,
+    },
   },
   methods: {
     getAppStore,

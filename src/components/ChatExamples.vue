@@ -9,6 +9,7 @@
         {{ item.name }}
       </Floater>
     </Button>
+
   </div>
 </template>
 <script>
@@ -28,10 +29,13 @@ export default {
   },
   methods: {
     getChatStore,
-    getMessages
+    getMessages,
   },
   props: {
-    clickMessage: Function,
+    clickMessage: {
+      type: Function,
+      required: true,
+    },
   }
 }
 </script>

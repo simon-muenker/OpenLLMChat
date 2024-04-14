@@ -9,7 +9,6 @@ export const getArenaStore = defineStore('arena', {
         userTyping: '',
         loading: false,
         submitted: false,
-        feedback: false,
         agents: [
             {
                 model: null,
@@ -21,6 +20,7 @@ export const getArenaStore = defineStore('arena', {
             },
         ],
         persona: null,
+        winner: null,
     }),
     getters: {
         getUserTyping: (state) => state.userTyping,
@@ -32,7 +32,7 @@ export const getArenaStore = defineStore('arena', {
         isConfigured: (state) => {
             return state.persona && state.agents[0].model && state.agents[1].model
         },
-        hasFeedback: (state) => state.feedback
+        getWinner: (state) => state.winner
     },
     actions: {
         setUserTyping(text) {
@@ -78,12 +78,12 @@ export const getArenaStore = defineStore('arena', {
             postRank(winner, loser)
                 .then(() => {
                     console.debug(`>> rankin: ++ ${winner} | -- ${loser}`)
-                    this.feedback = true
+                    this.winner = winner
                 })
         },
         reset() {
             this.submitted = false
-            this.feedback = false
+            this.winner = null
             this.agents.forEach(agent => {
                 agent.messages = []
             })

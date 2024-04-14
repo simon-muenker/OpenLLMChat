@@ -16,7 +16,7 @@
     </div>
 
     <div class="flex flex-row gap-3 justify-between items-center">
-      <Button @click="doReset">
+      <Button v-if="doReset" @click="doReset">
         <ArrowPathIcon class="h-5 w-5 text-red-600"/>
       </Button>
       <Caption class="select-none self-end">Generated content may be inaccurate or false.</Caption>
@@ -49,9 +49,18 @@ export default {
   props: {
     getTyping: Object,
     setTyping: Function,
-    canSubmit: Boolean,
-    submitMessage: Function,
-    doReset: Function,
+    canSubmit: {
+      type: Boolean,
+      required: true,
+    },
+    submitMessage: {
+      type: Function,
+      required: true,
+    },
+    doReset: {
+      type: Function,
+      required: false,
+    },
   },
   methods: {
     getChatStore,

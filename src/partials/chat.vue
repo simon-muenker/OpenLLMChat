@@ -1,64 +1,62 @@
 <template>
 
-  <Container>
-    <Headline>OpenLLMChat</Headline>
-    <span class="h-16"></span>
-  </Container>
+  <AppHeader headline="OpenLLMChat"/>
 
   <AppConfigure v-if="!getChatStore().isConfigured"/>
 
   <Container v-else>
 
-    <ChatMessages :messages="getChatStore().getMessages"/>
+    <ChatMessages :messages="getChatStore().getMessages" :on-feedback="getChatStore().postUserFeedback"/>
 
     <Loader v-if="getChatStore().isLoading"/>
-    <span class="h-8"></span>
+    <Spacer/>
 
     <ChatExamples
         v-if="getChatStore().isMessagesEmpty"
         :click-message="(message) => {getChatStore().setUserTyping(message); getChatStore().postUserMessage()}"
     />
 
-    <span class="h-0.5"></span>
+    <Spacer size="tiny"/>
 
     <ChatInteraction
-        :get-typing="getChatStore().getUserTyping"
         :canSubmit="getChatStore().canUserSubmit"
-        :submit-message="getChatStore().postUserMessage"
         :do-reset="getChatStore().reset"
+        :get-typing="getChatStore().getUserTyping"
         :set-typing="getChatStore().setUserTyping"
+        :submit-message="getChatStore().postUserMessage"
     />
 
-    <AppFooter/>
-
   </Container>
+
 </template>
 <script>
 import {getChatStore} from "@/stores/chat"
 
-import Headline from "@/components/typography/Headline.vue"
+import Container from "@/components/atoms/Container.vue"
+import Loader from "@/components/atoms/Loader.vue"
+import Spacer from "@/components/atoms/Spacer.vue"
+
+import AppHeader from "@/components/AppHeader.vue"
+import AppConfigure from "@/components/AppConfigure.vue"
+import AppFooter from "@/components/AppFooter.vue"
 
 import ChatMessages from "@/components/ChatMessages.vue"
 import ChatExamples from "@/components/ChatExamples.vue"
 import ChatInteraction from "@/components/ChatInteraction.vue"
 
-import AppFooter from "@/components/AppFooter.vue"
-import AppConfigure from "@/components/AppConfigure.vue"
-import Container from "@/components/atoms/Container.vue"
-import Loader from "@/components/atoms/Loader.vue";
-
 
 export default {
   name: 'Chat',
   components: {
+    Container,
     Loader,
-    Headline,
+    Spacer,
+    AppHeader,
+    AppConfigure,
+    AppFooter,
     ChatMessages,
     ChatExamples,
     ChatInteraction,
-    AppFooter,
-    AppConfigure,
-    Container,
   },
   methods: {
     getChatStore,

@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col gap-8">
-    <template v-for="item in getParsedMessages">
 
+    <template v-for="item in getParsedMessages">
       <div class="flex gap-4">
 
         <div class="shrink-0 text-3xl w-10 text-center leading-tight select-none">
@@ -19,20 +19,22 @@
         </div>
 
         <div class="flex items-end">
-          <ChatMessagesFeedback v-if="item.id" :id="item.id" :feedback="item.feedback"/>
+          <ChatMessagesFeedback
+              v-if="onFeedback && item.id"
+              :id="item.id"
+              :feedback="item.feedback"
+              :on-feedback="onFeedback"
+          />
         </div>
 
       </div>
-
     </template>
+
   </div>
 </template>
 
 <script>
 import {marked} from "marked"
-import {ArrowTrendingDownIcon, ArrowTrendingUpIcon} from "@heroicons/vue/24/outline"
-
-import {getChatStore} from "@/stores/chat"
 
 import Floater from "@/components/atoms/Floater.vue"
 import Button from "@/components/atoms/Button.vue"
@@ -48,8 +50,6 @@ import ChatMessagesFeedback from "@/components/ChatMessagesFeedback.vue"
 export default {
   name: "ChatMessages",
   components: {
-    ArrowTrendingUpIcon,
-    ArrowTrendingDownIcon,
     Button,
     Floater,
     Text,
@@ -57,10 +57,16 @@ export default {
     TextExtraBold,
     Caption,
     ChatMessagesFeedback,
-
   },
   props: {
-    messages: Array,
+    messages: {
+      type: Array,
+      required: true,
+    },
+    onFeedback: {
+      type: Function,
+      required: false,
+    },
   },
   computed: {
     getParsedMessages() {

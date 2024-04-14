@@ -5,6 +5,6 @@
 </template>
 <script>
 export default {
-  name: "Headline"
+  name: "Headline",
 }
 </script>

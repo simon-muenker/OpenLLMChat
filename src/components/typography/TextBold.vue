@@ -5,6 +5,6 @@
 </template>
 <script>
 export default {
-  name: "TextBold"
+  name: "TextBold",
 }
 </script>

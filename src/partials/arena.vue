@@ -43,7 +43,7 @@
       <Spacer size="tiny"/>
 
       <ChatInteraction
-          :canSubmit="getArenaStore().canUserSubmit"
+          :is-submit-disabled="!getArenaStore().canUserSubmit"
           :get-typing="getArenaStore().getUserTyping"
           :set-typing="getArenaStore().setUserTyping"
           :submit-message="getArenaStore().postUserMessage"

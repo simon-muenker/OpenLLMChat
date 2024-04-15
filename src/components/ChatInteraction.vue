@@ -1,5 +1,5 @@
 <template>
-  <Floater @keyup.ctrl.enter="submitMessage">
+  <Floater @keyup.ctrl.enter="() => isSubmitDisabled ? submitMessage() : null">
 
     <div class="flex flex-row gap-3 items-center">
           <Textarea
@@ -8,7 +8,7 @@
               @input="(event) => {setTyping(event.target.value)}"
           />
       <Button
-          :disabled="canSubmit"
+          :disabled="isSubmitDisabled"
           @click="submitMessage"
       >
         <PaperAirplaneIcon class="h-10 w-10 text-teal-600"/>
@@ -49,7 +49,7 @@ export default {
   props: {
     getTyping: Object,
     setTyping: Function,
-    canSubmit: {
+    isSubmitDisabled: {
       type: Boolean,
       required: true,
     },

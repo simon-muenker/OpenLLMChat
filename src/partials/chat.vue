@@ -19,7 +19,7 @@
     <Spacer size="tiny"/>
 
     <ChatInteraction
-        :is-submit-disabled="!getChatStore().canUserSubmit"
+        :is-submit-disabled="getChatStore().isSubmitDisabled"
         :do-reset="getChatStore().reset"
         :get-typing="getChatStore().getUserTyping"
         :set-typing="getChatStore().setUserTyping"

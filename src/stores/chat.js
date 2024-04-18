@@ -17,6 +17,7 @@ export const getChatStore = defineStore('chat', {
     getters: {
         getUserTyping: (state) => state.userTyping,
         canUserSubmit: (state) => state.userTyping.length > 8 && !state.loading,
+        isSubmitDisabled: (state) => !state.canUserSubmit,
         getMessages: (state) => state.messages,
         isMessagesEmpty: (state) => state.messages.length === 0,
         isLoading: (state) => state.loading,
